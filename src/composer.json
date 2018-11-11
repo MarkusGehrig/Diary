@@ -1,0 +1,10 @@
+{
+    "require-dev": {
+        "symfony/web-server-bundle": "^4.1"
+    },
+    "require": {
+        "twig/twig": "^2.5",
+        "twbs/bootstrap": "4.1.3",
+        "doctrine/dbal": "^2.8"
+    }
+}
