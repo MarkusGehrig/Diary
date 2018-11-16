@@ -1,6 +1,7 @@
 {
     "require-dev": {
-        "symfony/web-server-bundle": "^4.1"
+        "symfony/web-server-bundle": "^4.1",
+        "phpunit/phpunit": "7"
     },
     "require": {
         "twig/twig": "^2.5",
