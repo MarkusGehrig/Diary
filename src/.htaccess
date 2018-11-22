@@ -1,0 +1,2 @@
+#RewriteEngine on
+#RewriteRule ^configuration$ /index.php? [L,R=301]
