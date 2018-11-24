@@ -1,11 +1,12 @@
 <?php
-  
-abstract class AbstractController {
-    public function __construct() {
-    
+
+abstract class abstractController
+{
+    public function __construct()
+    {
     }
 
-    public function show() {
-        
+    public function show()
+    {
     }
 }
