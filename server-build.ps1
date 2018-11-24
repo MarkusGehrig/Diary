@@ -1,5 +1,7 @@
 docker network create dairy --driver bridge
 
+echo "$PSScriptRoot"
+
 # Start a docker container for php and apache
 docker run --rm --network dairy -dit -p 80:80 -v $PSScriptRoot\src:/var/www/html php:7.2-apache 
 
