@@ -1,6 +1,6 @@
 <?php
 
-use MarkusGehrig\Diary\Bootstrap\Bootstrap;
+namespace MarkusGehrig\Diary\Bootstrap;
 
 // Copyright (c) 2018 Markus Gehrig
 // 
@@ -22,9 +22,46 @@ use MarkusGehrig\Diary\Bootstrap\Bootstrap;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// Load the composer autoloader. 
-include_once __DIR__.'/vendor/autoload.php';
+use Symfony\Component\HttpFoundation\Request;
 
-$bootstrap = new Bootstrap();
-$bootstrap->main();
+class Bootstrap {
 
+    /* 
+     *
+     */
+    private $Request = null;
+
+    /* 
+     *
+     */
+    public function __construct() {
+        
+        // Load the configuration from the configuration file
+        $GLOBALS['configuration'] = $this->getConfiguration();
+
+        // Load the request
+        $GLOBALS['request'] = $this->getRequest();
+    }
+
+    /* 
+     *
+     */
+    public function main() {
+        echo("<pre>");
+        print_r($GLOBALS['configuration']);
+        print_r($GLOBALS['request']);
+        echo("</pre>");
+    }
+
+    /* 
+     *
+     */
+    public function getRequest() {
+        return Request::createFromGlobals();
+    }
+
+    public function getConfiguration() {
+        return include 'configuration/Configuration.php';
+    }
+
+}
