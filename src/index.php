@@ -25,11 +25,6 @@ use MarkusGehrig\Diary\Bootstrap\Bootstrap;
 // Load the composer autoloader.
 include_once __DIR__.'/vendor/autoload.php';
 
-<<<<<<< HEAD
 $bootstrap = new Bootstrap();
 $bootstrap->main();
 
-=======
-// Load the configuration from the configuration file
-$GLOBALS['configuration'] = include __DIR__.'/configuration/Configuration.php';
->>>>>>> 8021e4788da17c8d475878ec8bf165eca3cb7c6a
