@@ -2,3 +2,4 @@ src/vendor
 mysql
 composer.lock
 desktop.ini
+*.tmp
