@@ -17,6 +17,8 @@
         "zurb/foundation-sites": "^6.5"
     },
     "autoload": {
-        "psr-4": {"":"src/"}    
+
+        "psr-4": {"":"classes/"}    
+    
     }
 }

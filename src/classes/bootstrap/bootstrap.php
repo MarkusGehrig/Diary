@@ -1,5 +1,7 @@
 <?php
 
+namespace MarkusGehrig\Diary\Bootstrap;
+
 // Copyright (c) 2018 Markus Gehrig
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,26 +22,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// Main Configuration
-// This file configures the hole static part of the website
-return [
-    // Database Configuration
-    'database' => [
+use Symfony\Component\HttpFoundation\Request;
 
-        // Server URL, IP, DNS-Name
-        'server'   => 'db',
+class bootstrap
+{
 
-        // Database user
-        'user'     => 'root',
+    /*
+     *
+     */
+    private $Request = null;
 
-        // Database password
-        'password' => 'geheim',
+    /*
+     *
+     */
+    public function __construct()
+    {
+        
+        // Load the configuration from the configuration file
+        $GLOBALS['configuration'] = $this->getConfiguration();
 
-        // Database name
-        'database' => 'dairy',
+        // Load the request
+        $GLOBALS['request'] = $this->getRequest();
+    }
 
-        // Driver (which type of database is used)
-        // Allowed values are pdo_mysql, ibm_db2, pdo_sqlsrv, pdo_pgsql, pdo_sqlite
-        'driver'   => 'pdo_mysql',
-    ],
-];
+    /*
+     *
+     */
+    public function main()
+    {
+        echo("<pre>");
+        print_r($GLOBALS['configuration']);
+        print_r($GLOBALS['request']);
+        echo("</pre>");
+    }
+
+    /*
+     *
+     */
+    public function getRequest()
+    {
+        return Request::createFromGlobals();
+    }
+
+    public function getConfiguration()
+    {
+        return include 'configuration/Configuration.php';
+    }
+}
