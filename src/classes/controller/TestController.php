@@ -21,20 +21,17 @@ namespace MarkusGehrig\Diary\Controller;
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-  
-abstract class AbstractController
-{
-    private $needAuthentication = true;
 
+use MarkusGehrig\Diary\Controller\AbstractController;
+
+class TestController extends AbstractController
+{
     public function __construct()
     {
     }
 
-    public function getNeedAuthentication() {
-        return $this->needAuthentication;
-    }
-
     public function show()
     {
+        echo('hallo Welt');
     }
 }

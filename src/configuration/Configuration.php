@@ -40,6 +40,13 @@ return [
 
         // Driver (which type of database is used)
         // Allowed values are pdo_mysql, ibm_db2, pdo_sqlsrv, pdo_pgsql, pdo_sqlite
-        'driver'   => 'pdo_mysql',
+        'driver'   => 'pdo_mysql'
     ],
+
+    'password' => [
+        'algo'  => PASSWORD_BCRYPT,
+    ],
+
+    // Is SSL active or not
+    'ssl'      => false
 ];

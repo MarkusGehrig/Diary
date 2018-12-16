@@ -22,50 +22,45 @@ namespace MarkusGehrig\Diary\Bootstrap;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use Symfony\Component\HttpFoundation\Request;
+use MarkusGehrig\Diary\IO\Request;
+use MarkusGehrig\Diary\IO\Response;
 
-class bootstrap
+use MarkusGehrig\Diary\Dispatcher\Dispatcher;
+
+class Bootstrap
 {
 
     /*
      *
      */
-    private $Request = null;
+    private $request = null;
 
     /*
      *
      */
     public function __construct()
-    {
-        
+    {       
         // Load the configuration from the configuration file
         $GLOBALS['configuration'] = $this->getConfiguration();
-
-        // Load the request
-        $GLOBALS['request'] = $this->getRequest();
     }
 
-    /*
-     *
-     */
     public function main()
     {
-        echo("<pre>");
-        print_r($GLOBALS['configuration']);
-        print_r($GLOBALS['request']);
-        echo("</pre>");
-    }
+        // Get IO classes for request and responde
+        $request = new Request();
+        $response = new Response();
 
-    /*
+        $dispatcher = new Dispatcher();
+        $html = $dispatcher->setController('Test')->dispatch();
+    }
+  
+    /**
+     * getConfiguration
      *
+     * @return void
      */
-    public function getRequest()
-    {
-        return Request::createFromGlobals();
-    }
-
     public function getConfiguration()
     {
-        return include 'configuration/Configuration.php';
+        return (array) include 'configuration/Configuration.php';
     }
 }
