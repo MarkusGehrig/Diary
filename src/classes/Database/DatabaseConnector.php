@@ -6,26 +6,30 @@ use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
 
-class DatabaseConnector {
-
+class DatabaseConnector
+{
     private $connection = null;
 
     private $config = [];
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->config = $this->getDatabaseCredentialsFromConfiguration();
         $this->connection = $this->getDbalConnection();
-    } 
+    }
 
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->connection;
     }
 
-    private function getDatabaseCredentialsFromConfiguration() {
+    private function getDatabaseCredentialsFromConfiguration()
+    {
         return $GLOBALS['configuration']['database'];
     }
 
-    private function getDbalConnection() {
+    private function getDbalConnection()
+    {
         $config = new Configuration();
         $connectionParams = array(
             'dbname' =>     $this->config['database'],
@@ -35,5 +39,5 @@ class DatabaseConnector {
             'driver' =>     $this->config['driver'],
         );
         return DriverManager::getConnection($connectionParams, $config);
-    }   
+    }
 }

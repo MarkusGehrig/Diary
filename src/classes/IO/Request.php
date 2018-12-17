@@ -4,25 +4,27 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 namespace MarkusGehrig\Diary\IO;
 
-class Request {
-
+class Request
+{
     private $request = [];
 
-    public function __construct() {
+    public function __construct()
+    {
         // Load the request
         $this->request = $this->getSymfonyRequest();
         $GLOBALS['request'] = $this;
     }
 
-    public function getRequest() {
+    public function getRequest()
+    {
         return $this->request;
     }
 
-    public function getRequestParameter($name) {
+    public function getRequestParameter($name)
+    {
         if (key_exists($name, $this->request)) {
             return $this->request[$name];
-        }
-        else {
+        } else {
             $exception = new Exception("Request parameter does not exists.", 1000);
         }
     }
