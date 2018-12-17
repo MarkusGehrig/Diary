@@ -28,7 +28,7 @@ use MarkusGehrig\Diary\Database\DatabaseConnector;
 
 use MarkusGehrig\Diary\Dispatcher\Dispatcher;
 
-class Bootstrap
+class bootstrap
 {
 
     /*
@@ -40,7 +40,7 @@ class Bootstrap
      *
      */
     public function __construct()
-    {       
+    {
         // Load the configuration from the configuration file
         $GLOBALS['configuration']   = $this->getConfiguration();
         $GLOBALS['database']        = (new DatabaseConnector())->getConnection();

@@ -22,7 +22,7 @@ namespace MarkusGehrig\Diary\Controller;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
   
-abstract class AbstractController
+abstract class abstractController
 {
     private $needAuthentication = true;
 
@@ -30,7 +30,8 @@ abstract class AbstractController
     {
     }
 
-    public function getNeedAuthentication() {
+    public function getNeedAuthentication()
+    {
         return $this->needAuthentication;
     }
 

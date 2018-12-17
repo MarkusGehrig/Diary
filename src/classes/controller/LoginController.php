@@ -10,7 +10,6 @@ class LoginController extends AbstractController
 
     public function __construct()
     {
-
     }
 
     public function show()
