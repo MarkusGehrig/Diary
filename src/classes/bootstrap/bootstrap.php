@@ -24,6 +24,7 @@ namespace MarkusGehrig\Diary\Bootstrap;
 
 use MarkusGehrig\Diary\IO\Request;
 use MarkusGehrig\Diary\IO\Response;
+use MarkusGehrig\Diary\Database\DatabaseConnector;
 
 use MarkusGehrig\Diary\Dispatcher\Dispatcher;
 
@@ -41,7 +42,10 @@ class Bootstrap
     public function __construct()
     {       
         // Load the configuration from the configuration file
-        $GLOBALS['configuration'] = $this->getConfiguration();
+        $GLOBALS['configuration']   = $this->getConfiguration();
+        $GLOBALS['database']        = (new DatabaseConnector())->getConnection();
+
+        //var_dump($GLOBALS['database']);
     }
 
     public function main()

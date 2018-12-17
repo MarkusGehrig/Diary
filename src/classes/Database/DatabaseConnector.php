@@ -10,18 +10,29 @@ class DatabaseConnector {
 
     private $connection = null;
 
+    private $config = [];
+
     public function __construct() {
-        $this->connection = $this->getDbalConnection;
+        $this->config = $this->getDatabaseCredentialsFromConfiguration();
+        $this->connection = $this->getDbalConnection();
     } 
-    // TODO geht parameters from Globals
+
+    public function getConnection() {
+        return $this->connection;
+    }
+
+    private function getDatabaseCredentialsFromConfiguration() {
+        return $GLOBALS['configuration']['database'];
+    }
+
     private function getDbalConnection() {
         $config = new Configuration();
         $connectionParams = array(
-            'dbname' => 'mydb',
-            'user' => 'user',
-            'password' => 'secret',
-            'host' => 'localhost',
-            'driver' => 'pdo_mysql',
+            'dbname' =>     $this->config['database'],
+            'user' =>       $this->config['user'],
+            'password' =>   $this->config['password'],
+            'host' =>       $this->config['server'],
+            'driver' =>     $this->config['driver'],
         );
         return DriverManager::getConnection($connectionParams, $config);
     }   
