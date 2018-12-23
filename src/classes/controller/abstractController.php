@@ -36,5 +36,6 @@ abstract class AbstractController
 
     public function show()
     {
+
     }
 }

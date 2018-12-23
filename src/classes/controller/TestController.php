@@ -22,9 +22,9 @@ namespace MarkusGehrig\Diary\Controller;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use MarkusGehrig\Diary\Controller\AbstractController;
+use MarkusGehrig\Diary\Controller\AbstractViewController;
 
-class TestController extends AbstractController
+class TestController extends AbstractViewController
 {
     public function __construct()
     {

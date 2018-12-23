@@ -55,7 +55,7 @@ class Bootstrap
         $response = new Response();
 
         $dispatcher = new Dispatcher();
-        $html = $dispatcher->setController('Test')->dispatch();
+        $html = $dispatcher->setController('Login')->dispatch();
     }
   
     /**
