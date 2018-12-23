@@ -2,13 +2,14 @@
 
 namespace MarkusGehrig\Diary\Auth;
 
-class Encrypter {
-
-
-    public function __construct() {
+class Encrypter
+{
+    public function __construct()
+    {
     }
 
-    public function encrypt($password) {
+    public function encrypt($password)
+    {
         $algo = $GLOBALS['configuration']['password']['algo'];
 
         $options = [
@@ -18,7 +19,8 @@ class Encrypter {
         return (string) password_hash($password, $algo, $options);
     }
 
-    public function verify($password, $hash) {
+    public function verify($password, $hash)
+    {
         return (bool) password_verify();
     }
 }
