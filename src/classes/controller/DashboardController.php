@@ -8,7 +8,7 @@ class DashboardController extends AbstractViewController
 {
     public function __construct()
     {
-        parent::__construct();    
+        parent::__construct();
     }
 
     public function show()
@@ -16,4 +16,3 @@ class DashboardController extends AbstractViewController
         return $this->render(null);
     }
 }
-
