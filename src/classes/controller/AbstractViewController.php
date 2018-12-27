@@ -5,8 +5,8 @@ namespace MarkusGehrig\Diary\Controller;
 use MarkusGehrig\Diary\Controller\AbstractController;
 use MarkusGehrig\Diary\View\View;
 
-class AbstractViewController extends AbstractController {
-    
+class AbstractViewController extends AbstractController
+{
     private $view;
 
     private $template = '';
@@ -25,16 +25,18 @@ class AbstractViewController extends AbstractController {
 
     public function show()
     {
-
     }
 
-    public function render($parameter) {
+    public function render($parameter)
+    {
         return ($this->view->setTemplate($this->template)->render($parameter));
     }
 
-    function get_class_name($classname)
+    public function get_class_name($classname)
     {
-        if ($pos = strrpos($classname, '\\')) return substr($classname, $pos + 1);
+        if ($pos = strrpos($classname, '\\')) {
+            return substr($classname, $pos + 1);
+        }
         return $pos;
     }
 }

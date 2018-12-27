@@ -12,7 +12,6 @@ class LoginController extends AbstractViewController
     public function __construct()
     {
         parent::__construct("cache/twig");
-        
     }
 
     public function show()
@@ -20,17 +19,17 @@ class LoginController extends AbstractViewController
         return $this->render(null);
     }
 
-    public function loginAction() {
+    public function loginAction()
+    {
         $authentication = new Authentication();
 
         $request = $this->getControllerRequest();
         $username = $request['useremail'];
         $password = $request['userpassword'];
 
-        if($authentication->verify($username, $password)) {
+        if ($authentication->verify($username, $password)) {
             return $GLOBALS['dispatcher']->redirect("Dashboard");
-        }
-        else {
+        } else {
             return $this->render(array('error' => true));
         }
     }

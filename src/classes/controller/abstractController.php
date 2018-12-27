@@ -22,7 +22,7 @@ namespace MarkusGehrig\Diary\Controller;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
   
-abstract class AbstractController
+abstract class abstractController
 {
     private $needAuthentication = true;
     private $controllerRequest;
@@ -38,15 +38,16 @@ abstract class AbstractController
 
     public function run()
     {
-
     }
 
-    public function setValue($requestValue) {
+    public function setValue($requestValue)
+    {
         $this->controllerRequest = $requestValue;
         return $this;
     }
 
-    public function getControllerRequest() {
+    public function getControllerRequest()
+    {
         return $this->controllerRequest;
     }
 }
