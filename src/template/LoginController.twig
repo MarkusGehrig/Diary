@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>MyDiary</title>
-        
+        {% include '/partials/head.twig' %}
     </head>
     <body>
-        Template
+        {% include '/partials/header.twig' %}
+        <main>
+            <section class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1>Hallo</h1>
+                        <p>Willkommen auf MyDairy, deinem Online Tagebuch.</p>
+                    </div>
+                </div>  
+            </section>
+            <section class="jumbotron">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Login</h1>
+                        </div>
+                        <form class="col-12" action="index.php" method="post">
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input name="Controller[useremail]" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input name="Controller[userpassword]" type="password" class="form-control" id="password" placeholder="Password">
+                            </div>
+                            <div class="form-group form-check">
+                                <input name="Controller[dontforgetpassword]" type="checkbox" class="form-check-input" id="dontforgetpassword">
+                                <label class="form-check-label" for="dontforgetpassword">Don't forget login.</label>
+                            </div>
+                            <input type="hidden" name="Controller[name]" value="Login" />
+                            <input type="hidden" name="Controller[action]" value="login" />
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
     </body>
 </html>

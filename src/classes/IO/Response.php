@@ -20,13 +20,13 @@ class Response
         $this->response->send();
     }
 
-    public function setContent(string $content)
+    public function setContent(string $content = "No Content")
     {
         $this->response->setContent($content);
         return $this;
     }
 
-    public function setStatusCode(string $code = SymfonyResponse::HTTP_OK)
+    public function setStatusCode(string $code = \Symfony\Component\HttpFoundation\Response::HTTP_OK)
     {
         $this->response->setStatusCode($code);
         return $this;

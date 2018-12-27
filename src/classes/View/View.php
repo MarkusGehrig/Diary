@@ -12,11 +12,11 @@ class View {
 
     private $template;
 
-    public function __construct() {
+    public function __construct($cache = false) {
         $loader = new Twig_Loader_Filesystem($path);
         $loader->addPath($this->path, '__main__');
         $this->twig = new Twig_Environment($loader, array(
-            'cache' => 'cache/twig',
+            'cache' => $cache,
         ));
     }
 

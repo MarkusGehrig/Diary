@@ -11,15 +11,25 @@ class AbstractViewController extends AbstractController {
 
     private $template = '';
 
-    public function __construct()
+    public function __construct($cache = false)
     {
         parent::__construct();
         $this->template = $this->get_class_name(get_class($this)) . '.twig';
-        $this->view = new View();
+        $this->view = new View($cache);
+    }
+
+    public function run()
+    {
+        return $this->show();
+    }
+
+    public function show()
+    {
+
     }
 
     public function render($parameter) {
-        echo ($this->view->setTemplate($this->template)->render($parameter));
+        return ($this->view->setTemplate($this->template)->render($parameter));
     }
 
     function get_class_name($classname)

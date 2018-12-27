@@ -28,13 +28,8 @@ use MarkusGehrig\Diary\Database\DatabaseConnector;
 
 use MarkusGehrig\Diary\Dispatcher\Dispatcher;
 
-class bootstrap
+class Bootstrap
 {
-
-    /*
-     *
-     */
-    private $request = null;
 
     /*
      *
@@ -45,17 +40,19 @@ class bootstrap
         $GLOBALS['configuration']   = $this->getConfiguration();
         $GLOBALS['database']        = (new DatabaseConnector())->getConnection();
 
+        // Get IO classes for request and responde
+        $request = new Request();
+        $GLOBALS['response']        = new Response();
+        $GLOBALS['dispatcher']      = new Dispatcher();
+        
         //var_dump($GLOBALS['database']);
     }
 
     public function main()
     {
-        // Get IO classes for request and responde
-        $request = new Request();
-        $response = new Response();
-
-        $dispatcher = new Dispatcher();
-        $html = $dispatcher->setController('Login')->dispatch();
+        $html = $GLOBALS['dispatcher']->setController()->setAction()->dispatch();
+        
+        $GLOBALS['response']->setStatusCode()->setHttpResponseHeader()->setContent($html)->send();
     }
   
     /**
