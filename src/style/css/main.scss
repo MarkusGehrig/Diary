@@ -1,5 +1,6 @@
 // Load the Bootstrap SCSS
 @import '../../vendor/twbs/bootstrap/scss/bootstrap.scss';
+@import '../scss/layout.scss';
 
 .card.image {
     width: 32%;

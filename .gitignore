@@ -4,3 +4,4 @@ composer.lock
 desktop.ini
 *.tmp
 cache
+src/configuration/Configuration.php

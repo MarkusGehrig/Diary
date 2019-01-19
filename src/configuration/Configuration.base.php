@@ -23,6 +23,8 @@
 // Main Configuration
 // This file configures the hole static part of the website
 return [
+    'domain' => '',
+
     // Database Configuration
     'database' => [
 
@@ -45,6 +47,12 @@ return [
 
     'password' => [
         'algo'  => PASSWORD_BCRYPT,
+    ],
+
+    'mail'  => [
+        'server' => 'XYZ.com',
+        'user' => 'XYZ',
+        'password' => 'XYZ'
     ],
 
     // Is SSL active or not

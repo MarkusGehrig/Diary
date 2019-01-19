@@ -1,6 +1,6 @@
 <?php
 
-namespace MarkusGehrig\Diary\Database;
+namespace MarkusGehrig\Diary\Mail;
 
 // Copyright (c) 2018 Markus Gehrig
 //
@@ -22,42 +22,46 @@ namespace MarkusGehrig\Diary\Database;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use Doctrine\DBAL\Configuration;
-use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Connection;
+use \Swift_SmtpTransport;
+use \Swift_Message;
+use \Swift_Mailer;
 
-class DatabaseConnector
-{
-    private $connection = null;
+class MailSender {
 
     private $config = [];
+    private $transport;
+    private $mailer;
 
-    public function __construct()
-    {
-        $this->config = $this->getDatabaseCredentialsFromConfiguration();
-        $this->connection = $this->getDbalConnection();
+    public function __construct() {
+        $this->config = $this->getSmtpCredentialsFromConfiguration();
+
+        //var_dump($this->config);
+
+        $this->transport = $this->getTransport();
+        $this->mailer = new Swift_Mailer($this->transport);
     }
 
-    public function getConnection()
-    {
-        return $this->connection;
+    public function createMail($subject, $sender, $receiver, $body)  {
+        return (new Swift_Message($subject))
+            ->setFrom((array) $sender)
+            ->setTo((array) $receiver)
+            ->setBody($body)
+            ->setContentType("text/html");;
     }
 
-    private function getDatabaseCredentialsFromConfiguration()
-    {
-        return $GLOBALS['configuration']['database'];
+    public function send($message) {
+        $result = $this->mailer->send($message);
+        print_r($result);
     }
 
-    private function getDbalConnection()
+    private function getSmtpCredentialsFromConfiguration()
     {
-        $config = new Configuration();
-        $connectionParams = array(
-            'dbname' =>     $this->config['database'],
-            'user' =>       $this->config['user'],
-            'password' =>   $this->config['password'],
-            'host' =>       $this->config['server'],
-            'driver' =>     $this->config['driver'],
-        );
-        return DriverManager::getConnection($connectionParams, $config);
+        return $GLOBALS['configuration']['mail'];
+    }
+
+    private function getTransport() {
+        return (new Swift_SmtpTransport($this->config['server'], $this->config['port'], 'tls'))
+            ->setUsername($this->config['user'])
+            ->setPassword($this->config['password']);
     }
 }

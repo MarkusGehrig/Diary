@@ -1,7 +1,5 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-
 namespace MarkusGehrig\Diary\IO;
 
 class Request
@@ -25,7 +23,7 @@ class Request
         if (key_exists($name, $this->request)) {
             return $this->request[$name];
         } else {
-            $exception = new Exception("Request parameter does not exists.", 1000);
+            throw new \Exception("Request parameter does not exists.", 1000);
         }
     }
 

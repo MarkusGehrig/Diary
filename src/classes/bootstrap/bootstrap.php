@@ -28,7 +28,7 @@ use MarkusGehrig\Diary\Database\DatabaseConnector;
 
 use MarkusGehrig\Diary\Dispatcher\Dispatcher;
 
-class bootstrap
+class Bootstrap
 {
 
     /*

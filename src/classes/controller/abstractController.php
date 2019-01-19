@@ -22,7 +22,7 @@ namespace MarkusGehrig\Diary\Controller;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
   
-abstract class abstractController
+abstract class AbstractController
 {
     private $needAuthentication = true;
     private $controllerRequest;

@@ -9516,6 +9516,26 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
+header {
+  background: #2e2e2e;
+  color: #fff;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-right: 4px;
+  font-size: 2rem;
+}
+
+header .logo {
+  padding: 2px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+footer {
+  background: #5e5e5e;
+  color: #fff;
+}
+
 .card.image {
   width: 32%;
   display: inline-block;
