@@ -132,8 +132,7 @@ class UserdataModel {
         $queryBuilder = $GLOBALS['database']->createQueryBuilder();
         $data = $queryBuilder->select('id', 'email', 'password', 'surname', 'lastname', 'active')
             ->from('userdata')
-            ->where('id = ?')
-            ->setParameter(0, $queryBuilder->createNamedParameter($id))
+            ->where('id = ' . $queryBuilder->createNamedParameter($id))
             ->execute()
             ->fetch();
 
@@ -143,6 +142,8 @@ class UserdataModel {
         $this->surname = $data['surname'];
         $this->lastname = $data['lastname'];
         $this->active = $data['active'];
+
+        return $this;
     }
 
     public function getDataByEmail($email = '') {
@@ -161,6 +162,8 @@ class UserdataModel {
         $this->surname = $data['surname'];
         $this->lastname = $data['lastname'];
         $this->active = $data['active'];
+
+        return $this;
     }
 
     public function createData() {
@@ -187,7 +190,7 @@ class UserdataModel {
     }
 
     public function updateData() {
-        if($this->uid == null) {
+        if($this->id == null) {
             $this->createData();
         }
         else {
@@ -195,10 +198,10 @@ class UserdataModel {
             $GLOBALS['database']->update(
                 'userdata',
                 [
-                    'email' =>      $queryBuilder->createNamedParameter($this->getEmail()),
+                    'email' =>      $this->getEmail(),
                     'password' =>   $this->getPassword(),
-                    'surname' =>    $queryBuilder->createNamedParameter($this->getSurname()),
-                    'lastname' =>   $queryBuilder->createNamedParameter($this->getLastname()),
+                    'surname' =>    $this->getSurname(),
+                    'lastname' =>   $this->getLastname(),
                     'active' =>     $this->getActive()
                 ],
                 [

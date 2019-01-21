@@ -45,7 +45,18 @@ class RegistrationController extends AbstractViewController
 
     public function verfiyAction()
     {  
-        return $GLOBALS['dispatcher']->redirect("Login");
+        $request = $this->getControllerRequest();
+
+        $registrationModel = (new RegistrationModel())->getDataByVerifykey($request['verifykey']);
+        $userdataModel = $registrationModel->getUserdata();
+        
+        if($userdataModel != null) {
+            $userdataModel->setActive(true);
+            var_dump($userdataModel);
+            return $GLOBALS['dispatcher']->redirect("Login");
+        }
+
+        return $this->render(array('error' => true, 'message' => 'There is no data for the given parameters'));
     }
 
     public function registerAction()
@@ -74,13 +85,17 @@ class RegistrationController extends AbstractViewController
                     $registration->createData();
 
                     // Sendmail
-                    $mailSender = new MailSender();
-                    
-                    $message = $mailSender->createMail('Test', 'no-reply@photograph.photography', 'markus.gehrig96@gmail.com', $this->createMail($request["usersurname"], $request["userlastname"], $verifykey));
+                    $mailtext = $this->createMail($request["usersurname"], $request["userlastname"], $verifykey);
+
+                    $mailSender = new MailSender();               
+                    $message = $mailSender->createMail('Test', 'no-reply@photograph.photography', 'markus.gehrig96@gmail.com', $mailtext);
                     $mailSender->send($message);
 
                     return $GLOBALS['dispatcher']->redirect("Login");
-                } catch (\Throwable $th) {
+                } catch(\Exception $e) {
+                    return $this->render(array('error' => true, 'message' => 'Server error in registration <br />' . $e->getMessage()));
+                }  
+                catch (\Throwable $th) {
                     return $this->render(array('error' => true, 'message' => 'Server error in registration'));
                 }
             }
@@ -95,7 +110,7 @@ class RegistrationController extends AbstractViewController
             '<p><a href="'.$this->getActivationLink($verifykey).'">'.$this->getActivationLink($verifykey).'</a></p>';
     }
 
-    private function getActivationLink() {
+    private function getActivationLink($verifykey) {
         return $GLOBALS['configuration']['domain'] . '/index.php?Controller[name]=Registration&Controller[action]=verfiy&Controller[verifykey]='. $verifykey;
     }
 }

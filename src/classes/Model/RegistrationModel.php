@@ -23,6 +23,7 @@ namespace MarkusGehrig\Dairy\Model;
 // SOFTWARE.
 
 use \PDO;
+use MarkusGehrig\Dairy\Model\UserdataModel;
 
 class RegistrationModel {
 
@@ -77,16 +78,33 @@ class RegistrationModel {
      */
 
     public function getData(int $id) {
-
+        throw new \Exception('This Methode is not in use, use instead getDataByVerifykey()');
     }
 
     public function getDataByVerifykey($verifykey = "") {
-        
+        if($verifykey == "") {
+            throw new \Exception('No verifykey');
+        }
+        else {
+            $queryBuilder = $GLOBALS['database']->createQueryBuilder();
+            $data = $queryBuilder->select('id', 'date', 'verifykey', 'Userdata_id')
+                ->from('registration')
+                ->where('verifykey = '. $queryBuilder->createNamedParameter($verifykey))
+                ->execute()
+                ->fetch();
+
+            $this->id = $data['id'];
+            $this->date = $data['date'];
+            $this->verifykey = $data['verifykey'];
+            $this->userdata = (new UserdataModel())->getData($data['Userdata_id']);
+        }
+
+        return $this;
     }
 
     public function createData() {
         $queryBuilder = $GLOBALS['database']->createQueryBuilder();
-        var_dump($this->userdata->getId());
+        //var_dump($this->userdata->getId());
         $GLOBALS['database']->insert(
             'registration',
             [
@@ -105,7 +123,8 @@ class RegistrationModel {
     }
 
     public function updateData() {
-        if($this->uid !== null) {
+        var_dump($this);
+        if($this->id == null) {
             $this->createData();
         }
         else {
