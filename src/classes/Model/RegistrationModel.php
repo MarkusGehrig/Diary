@@ -25,21 +25,23 @@ namespace MarkusGehrig\Dairy\Model;
 use \PDO;
 use MarkusGehrig\Dairy\Model\UserdataModel;
 
-class RegistrationModel {
-
+class RegistrationModel
+{
     private $id;
     private $userdata;
     private $date;
     private $verifykey;
 
-    public function __construct($userdata = null, $date = 0, $verifykey = "", $id = null) {
+    public function __construct($userdata = null, $date = 0, $verifykey = "", $id = null)
+    {
         $this->id = $id;
         $this->userdata = $userdata;
         $this->date = $date;
         $this->verifykey = $verifykey;
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         //$this->updateData();
     }
 
@@ -47,7 +49,8 @@ class RegistrationModel {
      * Getter / Setter Uid
      */
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -55,21 +58,25 @@ class RegistrationModel {
      * Getter / Setter Date
      */
 
-    public function setDate(Datetime $date) {
+    public function setDate(Datetime $date)
+    {
         $this->date = $date;
         $this->updateData();
         return $this;
     }
 
-    public function getDate() {
+    public function getDate()
+    {
         return $this->date;
     }
 
-    public function getVerifykey() {
+    public function getVerifykey()
+    {
         return $this->verifykey;
     }
 
-    public function getUserdata() {
+    public function getUserdata()
+    {
         return $this->userdata;
     }
 
@@ -77,15 +84,16 @@ class RegistrationModel {
      * Getter / Setter Database
      */
 
-    public function getData(int $id) {
+    public function getData(int $id)
+    {
         throw new \Exception('This Methode is not in use, use instead getDataByVerifykey()');
     }
 
-    public function getDataByVerifykey($verifykey = "") {
-        if($verifykey == "") {
+    public function getDataByVerifykey($verifykey = "")
+    {
+        if ($verifykey == "") {
             throw new \Exception('No verifykey');
-        }
-        else {
+        } else {
             $queryBuilder = $GLOBALS['database']->createQueryBuilder();
             $data = $queryBuilder->select('id', 'date', 'verifykey', 'Userdata_id')
                 ->from('registration')
@@ -102,7 +110,8 @@ class RegistrationModel {
         return $this;
     }
 
-    public function createData() {
+    public function createData()
+    {
         $queryBuilder = $GLOBALS['database']->createQueryBuilder();
         //var_dump($this->userdata->getId());
         $GLOBALS['database']->insert(
@@ -122,13 +131,12 @@ class RegistrationModel {
         $this->id = $GLOBALS['database']->lastInsertId();
     }
 
-    public function updateData() {
+    public function updateData()
+    {
         var_dump($this);
-        if($this->id == null) {
+        if ($this->id == null) {
             $this->createData();
-        }
-        else {
-
+        } else {
         }
     }
 }
