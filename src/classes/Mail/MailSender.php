@@ -26,13 +26,14 @@ use \Swift_SmtpTransport;
 use \Swift_Message;
 use \Swift_Mailer;
 
-class MailSender {
-
+class MailSender
+{
     private $config = [];
     private $transport;
     private $mailer;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->config = $this->getSmtpCredentialsFromConfiguration();
 
         //var_dump($this->config);
@@ -41,15 +42,18 @@ class MailSender {
         $this->mailer = new Swift_Mailer($this->transport);
     }
 
-    public function createMail($subject, $sender, $receiver, $body)  {
+    public function createMail($subject, $sender, $receiver, $body)
+    {
         return (new Swift_Message($subject))
             ->setFrom((array) $sender)
             ->setTo((array) $receiver)
             ->setBody($body)
-            ->setContentType("text/html");;
+            ->setContentType("text/html");
+        ;
     }
 
-    public function send($message) {
+    public function send($message)
+    {
         $result = $this->mailer->send($message);
         print_r($result);
     }
@@ -59,7 +63,8 @@ class MailSender {
         return $GLOBALS['configuration']['mail'];
     }
 
-    private function getTransport() {
+    private function getTransport()
+    {
         return (new Swift_SmtpTransport($this->config['server'], $this->config['port'], 'tls'))
             ->setUsername($this->config['user'])
             ->setPassword($this->config['password']);
