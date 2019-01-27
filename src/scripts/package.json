@@ -1,0 +1,16 @@
+{
+    "name": "dairy_javascript",
+    "description": "JavaScript's functional programming helper library.",
+    "keywords": [
+        "util",
+        "functional",
+        "server",
+        "client",
+        "browser"
+    ],
+    "author": "Markus Gehrig <markus.gehrig96@gmail.ocom>",
+    "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^11.2.0",
+        "jquery": "^3.3.1"
+    }
+}
