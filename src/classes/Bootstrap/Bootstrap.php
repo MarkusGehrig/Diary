@@ -25,8 +25,8 @@ namespace MarkusGehrig\Diary\Bootstrap;
 use MarkusGehrig\Diary\IO\Request;
 use MarkusGehrig\Diary\IO\Response;
 use MarkusGehrig\Diary\Database\DatabaseConnector;
-
 use MarkusGehrig\Diary\Dispatcher\Dispatcher;
+use MarkusGehrig\Diary\Session\Session;
 
 class Bootstrap
 {
@@ -36,12 +36,15 @@ class Bootstrap
      */
     public function __construct()
     {
+        // Create Session
+        $GLOBALS['session']         = new Session();
+
         // Load the configuration from the configuration file
         $GLOBALS['configuration']   = $this->getConfiguration();
         $GLOBALS['database']        = (new DatabaseConnector())->getConnection();
 
         // Get IO classes for request and responde
-        $request = new Request();
+        $GLOBALS['request']         = new Request();
         $GLOBALS['response']        = new Response();
         $GLOBALS['dispatcher']      = new Dispatcher();
         

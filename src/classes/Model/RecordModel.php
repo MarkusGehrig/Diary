@@ -24,13 +24,13 @@ namespace MarkusGehrig\Dairy\Model;
 
 use \PDO;
 
-class UserdataModel {
+class RecordModel {
     private $id;
-    private $password;
-    private $surname;
-    private $lastname;
-    private $email;
-    private $active;
+    private $titel;
+    private $text;
+    private $date;
+    private $userdata_id;
+    private $category_id;
 
     public function __construct($email = '', $password = '', $surname = '', $lastname = '', $active = false, $id = null) {
         $this->id = $id;

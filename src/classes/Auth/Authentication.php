@@ -40,8 +40,16 @@ class Authentication
             return false;
         }
 
+        //var_dump($user);
         $user = (new UserdataModel())->getDataByEmail($user);
-        return $this->encrypter->verify($password, $user->getPassword());
+        //var_dump($user);
+        
+        
+        if ($this->encrypter->verify($password, $user->getPassword())) {
+            $GLOBALS['session']->setValue('login', true);
+            return true;
+        }
+        return false; 
     }
 
     private function getUser($user)

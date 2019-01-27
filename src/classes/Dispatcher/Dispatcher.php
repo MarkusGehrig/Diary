@@ -112,7 +112,11 @@ class Dispatcher
 
     private function checkAuthentication()
     {
-        return (boolean) true;
+        if ($GLOBALS['session']->getValue('login')) {
+            return (boolean) true;
+        };
+        return (boolean) false;
+        
     }
 
     private function getControllerClass()

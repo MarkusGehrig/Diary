@@ -1,6 +1,6 @@
 <?php
 
-namespace MarkusGehrig\Diary\Controller;
+namespace MarkusGehrig\Diary\Session;
 
 // Copyright (c) 2018 Markus Gehrig
 //
@@ -22,29 +22,17 @@ namespace MarkusGehrig\Diary\Controller;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use MarkusGehrig\Diary\Controller\AbstractViewController;
-
-class DashboardController extends AbstractViewController
-{
-    public function __construct()
-    {
-        parent::__construct();
+class Session {
+    public function __construct() {
+        session_start();
     }
 
-    public function show()
-    {
-        return $this->render(null);
+    public function setValue($name, $value) {
+        $_SESSION[$name] = $value;
+        return $this;
     }
 
-    public function createAction() {
-
-    }
-
-    public function modifyAction() {
-
-    }
-
-    public function removeAction() {
-
+    public function getValue($name) {
+        return $_SESSION[$name];
     }
 }

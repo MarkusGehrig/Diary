@@ -10,7 +10,7 @@ class Request
     {
         // Load the request
         $this->request = $this->getSymfonyRequest();
-        $GLOBALS['request'] = $this;
+        //$GLOBALS['request'] = $this;
     }
 
     public function getRequest()
