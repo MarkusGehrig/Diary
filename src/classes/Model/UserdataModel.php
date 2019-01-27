@@ -24,7 +24,8 @@ namespace MarkusGehrig\Dairy\Model;
 
 use \PDO;
 
-class UserdataModel {
+class UserdataModel
+{
     private $id;
     private $password;
     private $surname;
@@ -32,7 +33,8 @@ class UserdataModel {
     private $email;
     private $active;
 
-    public function __construct($email = '', $password = '', $surname = '', $lastname = '', $active = false, $id = null) {
+    public function __construct($email = '', $password = '', $surname = '', $lastname = '', $active = false, $id = null)
+    {
         $this->id = $id;
         $this->email = $email;
         $this->password = $password;
@@ -41,7 +43,8 @@ class UserdataModel {
         $this->active = $active;
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         //$this->updateData();
     }
 
@@ -49,7 +52,8 @@ class UserdataModel {
      * getter / setter Email
      */
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -58,11 +62,13 @@ class UserdataModel {
      * getter / setter Email
      */
 
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
         $this->updateData();
         return $this;
@@ -72,11 +78,13 @@ class UserdataModel {
      * getter / setter Password
      */
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = $password;
         $this->updateData();
         return $this;
@@ -86,11 +94,13 @@ class UserdataModel {
      * getter / setter Surname
      */
 
-    public function getSurname() {
+    public function getSurname()
+    {
         return $this->surname;
     }
 
-    public function setSurname($surname) {
+    public function setSurname($surname)
+    {
         $this->surname = $surname;
         $this->updateData();
         return $this;
@@ -100,11 +110,13 @@ class UserdataModel {
      * getter / setter Lastname
      */
 
-    public function getLastname() {
+    public function getLastname()
+    {
         return $this->lastname;
     }
 
-    public function setLastname($lastname) {
+    public function setLastname($lastname)
+    {
         $this->lastname = $lastname;
         $this->updateData();
         return $this;
@@ -114,11 +126,13 @@ class UserdataModel {
      * getter / setter Active
      */
 
-    public function getActive() {
+    public function getActive()
+    {
         return $this->active;
     }
 
-    public function setActive($active) {
+    public function setActive($active)
+    {
         $this->active = $active;
         $this->updateData();
         return $this;
@@ -128,7 +142,8 @@ class UserdataModel {
      * getter / setter Database
      */
 
-    public function getData(int $id) {
+    public function getData(int $id)
+    {
         $queryBuilder = $GLOBALS['database']->createQueryBuilder();
         $data = $queryBuilder->select('id', 'email', 'password', 'surname', 'lastname', 'active')
             ->from('userdata')
@@ -146,7 +161,8 @@ class UserdataModel {
         return $this;
     }
 
-    public function getDataByEmail($email = '') {
+    public function getDataByEmail($email = '')
+    {
         $queryBuilder = $GLOBALS['database']->createQueryBuilder();
         $data = $queryBuilder->select('id', 'email', 'password', 'surname', 'lastname', 'active')
             ->from('userdata')
@@ -166,7 +182,8 @@ class UserdataModel {
         return $this;
     }
 
-    public function createData() {
+    public function createData()
+    {
         $queryBuilder = $GLOBALS['database']->createQueryBuilder();
         $GLOBALS['database']->insert(
             'userdata',
@@ -189,11 +206,11 @@ class UserdataModel {
         $this->id = $GLOBALS['database']->lastInsertId();
     }
 
-    public function updateData() {
-        if($this->id == null) {
+    public function updateData()
+    {
+        if ($this->id == null) {
             $this->createData();
-        }
-        else {
+        } else {
             $queryBuilder = $GLOBALS['database']->createQueryBuilder();
             $GLOBALS['database']->update(
                 'userdata',
@@ -214,7 +231,7 @@ class UserdataModel {
                     PDO::PARAM_STR,
                     PDO::PARAM_BOOL
                 ]
-            );    
+            );
         }
     }
 }

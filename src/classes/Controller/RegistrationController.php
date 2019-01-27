@@ -44,13 +44,13 @@ class RegistrationController extends AbstractViewController
     }
 
     public function verfiyAction()
-    {  
+    {
         $request = $this->getControllerRequest();
 
         $registrationModel = (new RegistrationModel())->getDataByVerifykey($request['verifykey']);
         $userdataModel = $registrationModel->getUserdata();
         
-        if($userdataModel != null) {
+        if ($userdataModel != null) {
             $userdataModel->setActive(true);
             var_dump($userdataModel);
             return $GLOBALS['dispatcher']->redirect("Login");
@@ -65,13 +65,11 @@ class RegistrationController extends AbstractViewController
 
         //var_dump($request);
 
-        if( isset($request["usersurname"]) === true && 
-            isset($request["useremail"]) === true && 
+        if (isset($request["usersurname"]) === true &&
+            isset($request["useremail"]) === true &&
             isset($request["userlastname"]) === true &&
-            isset($request["userpassword"]) === true ) {
-            
-            if(filter_var($request["useremail"], FILTER_VALIDATE_EMAIL)) {
-
+            isset($request["userpassword"]) === true) {
+            if (filter_var($request["useremail"], FILTER_VALIDATE_EMAIL)) {
                 try {
                     $encrypter = new Encrypter();
                     $password = $encrypter->encrypt($request["userpassword"]);
@@ -87,15 +85,14 @@ class RegistrationController extends AbstractViewController
                     // Sendmail
                     $mailtext = $this->createMail($request["usersurname"], $request["userlastname"], $verifykey);
 
-                    $mailSender = new MailSender();               
+                    $mailSender = new MailSender();
                     $message = $mailSender->createMail('Test', 'no-reply@photograph.photography', 'markus.gehrig96@gmail.com', $mailtext);
                     $mailSender->send($message);
 
                     return $GLOBALS['dispatcher']->redirect("Login");
-                } catch(\Exception $e) {
+                } catch (\Exception $e) {
                     return $this->render(array('error' => true, 'message' => 'Server error in registration <br />' . $e->getMessage()));
-                }  
-                catch (\Throwable $th) {
+                } catch (\Throwable $th) {
                     return $this->render(array('error' => true, 'message' => 'Server error in registration'));
                 }
             }
@@ -104,13 +101,15 @@ class RegistrationController extends AbstractViewController
         return $this->render(array('error' => true, 'message' => 'Please fill out all fields'));
     }
 
-    private function createMail($firstname, $lastname, $verifykey) {
+    private function createMail($firstname, $lastname, $verifykey)
+    {
         return '<p>Hello ' . $firstname . ' ' . $lastname . '</p>' .
             '<p>You are just a step away from activate your account, please verify your email with the follow link.</p>' .
             '<p><a href="'.$this->getActivationLink($verifykey).'">'.$this->getActivationLink($verifykey).'</a></p>';
     }
 
-    private function getActivationLink($verifykey) {
+    private function getActivationLink($verifykey)
+    {
         return $GLOBALS['configuration']['domain'] . '/index.php?Controller[name]=Registration&Controller[action]=verfiy&Controller[verifykey]='. $verifykey;
     }
 }

@@ -39,11 +39,11 @@ class Dispatcher
         $this->query   = $GLOBALS['request']->getRequestParameter('query');
         
         $this->controllerValue = array_merge((array) $this->controllerValue, (array) $this->request->get('Controller'));
-        $this->controllerValue = array_merge((array) $this->controllerValue, (array) $this->query->get('Controller'));   
+        $this->controllerValue = array_merge((array) $this->controllerValue, (array) $this->query->get('Controller'));
     }
 
     public function setController()
-    {   
+    {
         if (isset($this->controllerValue['name'])) {
             $this->controller = $this->controllerValue['name'];
         } else {
