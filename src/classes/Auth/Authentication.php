@@ -47,6 +47,7 @@ class Authentication
         
         if ($this->encrypter->verify($password, $user->getPassword())) {
             $GLOBALS['session']->setValue('login', true);
+            $GLOBALS['session']->setValue('userId', $user->getId());
             return true;
         }
         return false; 

@@ -26,19 +26,17 @@ use \PDO;
 
 class RecordModel {
     private $id;
-    private $titel;
+    private $title;
     private $text;
     private $date;
-    private $userdata_id;
-    private $category_id;
+    private $userdata;
 
-    public function __construct($email = '', $password = '', $surname = '', $lastname = '', $active = false, $id = null) {
+    public function __construct($title = '', $text = '', $date = 0, $id = null, $userdata = null) {
         $this->id = $id;
-        $this->email = $email;
-        $this->password = $password;
-        $this->surname = $surname;
-        $this->lastname = $lastname;
-        $this->active = $active;
+        $this->text = $text;
+        $this->title = $title;
+        $this->date = $date;
+        $this->userdata = $userdata;
     }
 
     public function __destruct() {
@@ -53,136 +51,124 @@ class RecordModel {
         return $this->id;
     }
 
-
-    /**
-     * getter / setter Email
+    /** *
+     * getter / setter Text 
      */
 
-    public function getEmail() {
-        return $this->email;
-    }
-
-    public function setEmail($email) {
-        $this->email = $email;
+    public function setText($text) {
+        $this->text = $text;
         $this->updateData();
         return $this;
     }
 
-    /**
-     * getter / setter Password
-     */
-
-    public function getPassword() {
-        return $this->password;
+    public function getText(){
+        return $this->text;
     }
 
-    public function setPassword($password) {
-        $this->password = $password;
+    /**
+     * getter / setter Title
+     */
+    public function setTitle($title) {
+        $this->title = $title;
         $this->updateData();
         return $this;
     }
 
+    public function getTitle() {
+        return $this->title;
+    }
+    
     /**
-     * getter / setter Surname
+     * getter / setter Data
      */
 
-    public function getSurname() {
-        return $this->surname;
-    }
-
-    public function setSurname($surname) {
-        $this->surname = $surname;
+    public function setDate($date) {
+        $this->date = $date;
         $this->updateData();
         return $this;
     }
 
+    public function getDate() {
+        return $this->date;
+    }
+    
     /**
-     * getter / setter Lastname
+     * getter / setter userdata
      */
 
-    public function getLastname() {
-        return $this->lastname;
-    }
-
-    public function setLastname($lastname) {
-        $this->lastname = $lastname;
+    public function setUserdata($userdata) {
+        $this->userdata = $userdata;
         $this->updateData();
         return $this;
     }
-
-    /**
-     * getter / setter Active
-     */
-
-    public function getActive() {
-        return $this->active;
+    
+    public function getUserdata() {
+        return $this->userdata;
     }
-
-    public function setActive($active) {
-        $this->active = $active;
-        $this->updateData();
-        return $this;
-    }
-
+    
     /**
      * getter / setter Database
      */
 
     public function getData(int $id) {
         $queryBuilder = $GLOBALS['database']->createQueryBuilder();
-        $data = $queryBuilder->select('id', 'email', 'password', 'surname', 'lastname', 'active')
-            ->from('userdata')
+        $data = $queryBuilder->select('id', 'title', 'date', 'text', 'Userdata_id')
+            ->from('dairyitem')
             ->where('id = ' . $queryBuilder->createNamedParameter($id))
             ->execute()
             ->fetch();
 
-        $this->id = $data['id'];
-        $this->email = $data['email'];
-        $this->password = $data['password'];
-        $this->surname = $data['surname'];
-        $this->lastname = $data['lastname'];
-        $this->active = $data['active'];
+        $returnData = [];
+        foreach ($data as $item) {
+            $returnData[] = new RecordModel(
+                $item['title'],
+                $item['text'],
+                $item['date'],
+                $item['id'],
+                $item['Userdata_id']
+            );
+        }
 
-        return $this;
+        return $returnData;
     }
 
-    public function getDataByEmail($email = '') {
+    public function getDataByUser(int $id) {
         $queryBuilder = $GLOBALS['database']->createQueryBuilder();
-        $data = $queryBuilder->select('id', 'email', 'password', 'surname', 'lastname', 'active')
-            ->from('userdata')
-            ->where('email = "' . $email . '"', 'active = 1')
+        $data = $queryBuilder->select('id', 'title', 'date', 'text', 'Userdata_id')
+            ->from('dairyitem')
+            ->where('Userdata_id = ' . $queryBuilder->createNamedParameter($id))
             ->execute()
-            ->fetch();
+            ->fetchAll();
 
-        //var_dump($queryBuilder->getSQL());
+        $returnData = [];
+        foreach ($data as $item) {
+            $returnData[] = new RecordModel(
+                $item['title'],
+                $item['text'],
+                $item['date'],
+                $item['id'],
+                $item['Userdata_id']
+            );
+        }
 
-        $this->id = $data['id'];
-        $this->email = $data['email'];
-        $this->password = $data['password'];
-        $this->surname = $data['surname'];
-        $this->lastname = $data['lastname'];
-        $this->active = $data['active'];
-
-        return $this;
+        return $returnData;
     }
 
     public function createData() {
         $queryBuilder = $GLOBALS['database']->createQueryBuilder();
         $GLOBALS['database']->insert(
-            'userdata',
+            'dairyitem',
             [
-                'email' =>      $this->getEmail(),
-                'password' =>   $this->getPassword(),
-                'surname' =>    $this->getSurname(),
-                'lastname' =>   $this->getLastname(),
-                'active' =>     $this->getActive()
+                'title' =>          $this->getTitle(),
+                'text' =>           $this->getText(),
+                'date' =>           $this->getDate(),
+                'Userdata_id' =>    $this->getUserdata()
             ],
             [
                 PDO::PARAM_STR,
                 PDO::PARAM_STR,
-                PDO::PARAM_STR,
-                PDO::PARAM_STR,
-                PDO::PARAM_BOOL
+                PDO::PARAM_INT,
+                PDO::PARAM_INT
             ]
         );
         
@@ -198,11 +184,10 @@ class RecordModel {
             $GLOBALS['database']->update(
                 'userdata',
                 [
-                    'email' =>      $this->getEmail(),
-                    'password' =>   $this->getPassword(),
-                    'surname' =>    $this->getSurname(),
-                    'lastname' =>   $this->getLastname(),
-                    'active' =>     $this->getActive()
+                    'title' =>          $this->getTitle(),
+                    'text' =>           $this->getText(),
+                    'date' =>           $this->getDate(),
+                    'Userdata_id' =>    $this->getUserdata()
                 ],
                 [
                     'id' => $this->getId()
@@ -210,9 +195,8 @@ class RecordModel {
                 [
                     PDO::PARAM_STR,
                     PDO::PARAM_STR,
-                    PDO::PARAM_STR,
-                    PDO::PARAM_STR,
-                    PDO::PARAM_BOOL
+                    PDO::PARAM_INT,
+                    PDO::PARAM_INT
                 ]
             );    
         }

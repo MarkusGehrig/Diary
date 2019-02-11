@@ -23,21 +23,44 @@ namespace MarkusGehrig\Diary\Controller;
 // SOFTWARE.
 
 use MarkusGehrig\Diary\Controller\AbstractViewController;
+use MarkusGehrig\Dairy\Model\RecordModel;
 
 class DashboardController extends AbstractViewController
 {
+    private $userId = 0;
+
     public function __construct()
     {
         parent::__construct();
+        $this->userId = $GLOBALS['session']->getValue('userId');
     }
 
     public function show()
     {
-        return $this->render(null);
+        $RecordModels = (new RecordModel())->getDataByUser($this->userId);
+
+        $items = [];
+        foreach ($RecordModels as $RecordModel) {
+            $array['title'] = (string) $RecordModel->getTitle();
+            $array['date'] = (int) $RecordModel->getDate();
+            $array['text'] = (string) $RecordModel->getText();
+
+            $items[] = $array;
+        }
+
+        return $this->render(array('items' => $items));
     }
 
     public function createAction() {
+        $request = $this->getControllerRequest();
+        // var_dump();
+        //["title"]=> string(0) "" ["date"]=> string(0) "" ["text"]=> string(2271)
 
+        $RecordModel = new RecordModel((string) $request['title'], (string) $request['text'], (int) $request['date'], null, (int) $this->userId);
+        var_dump($RecordModel);
+
+        $RecordModel->createData();
+        return $this->show();
     }
 
     public function modifyAction() {

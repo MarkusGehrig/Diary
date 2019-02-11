@@ -40,7 +40,7 @@ class Response
 
     private function setDefaultHeaders()
     {
-        $this->response->headers->set('Content-Security-Policy', "default-src 'self' *.google.com");
+        //$this->response->headers->set('Content-Security-Policy', "default-src 'self' *.google.com");
         $this->response->setCharset('utf-8');
     }
 

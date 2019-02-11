@@ -17,8 +17,35 @@
             <section class="container">
                 <div class="row">
                     <div class="col-12">
+                        <form class="editorCreate" action="index.php" method="post">
+                            <input name="Controller[title]" type="text" placeholder="Title" class="form-control" />
+                            <input name="Controller[date]" type="date" class="form-control" />
+                            <div id="editor"></div>
+                            <input id="textCreate" type="hidden" name="Controller[text]" value="" />
+                            <input type="hidden" name="Controller[name]" value="Dashboard" />
+                            <input type="hidden" name="Controller[action]" value="create" />
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>   
+                    </div>
+                </div>
+            </section>
+            <section class="container">
+                <div class="row">
+                    <div class="col-12">
                         <h1>Last Entrances</h1>
                         
+                        {% for item in items %}
+                            <div class="entrance">
+                                <h2>{{ item.title }}</h2>
+                                <div class="date">
+                                    {{ item.date }}
+                                </div>
+                                <div class="text">
+                                    {{ item.text|raw }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <!--
                         <div class="entrance">
                             <h2>My Dairy</h2>
                             <div class="date">01.01.2019</div>
@@ -26,25 +53,8 @@
                                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
                                 Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu f
                             </div>
-                            <div class="card image">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                </div>
-                            </div>
-                            <div class="card image">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                </div>
-                            </div>
-                            <div class="card image">
-                                <img src="..." class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                </div>
-                            </div>
                         </div> 
+                        -->
                     </div>
                 </div>  
             </section>
