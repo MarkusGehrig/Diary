@@ -31,7 +31,7 @@ use MarkusGehrig\Diary\Auth\Encrypter;
 
 class RegistrationController extends AbstractViewController
 {
-    private $needAuthentication = false;
+    protected $needAuthentication = false;
 
     public function __construct()
     {

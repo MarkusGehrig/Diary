@@ -24,7 +24,7 @@ namespace MarkusGehrig\Diary\Controller;
   
 abstract class AbstractController
 {
-    private $needAuthentication = true;
+    protected $needAuthentication = true;
     private $controllerRequest;
 
     public function __construct()

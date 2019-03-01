@@ -112,6 +112,7 @@ class Dispatcher
         $this->controller = $controller;
         $this->action = $action;
         $this->controllerValue = $controllerValue;
+    
 
         return $this->dispatch();
     }
