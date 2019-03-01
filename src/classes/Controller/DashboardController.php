@@ -24,6 +24,8 @@ namespace MarkusGehrig\Diary\Controller;
 
 use MarkusGehrig\Diary\Controller\AbstractViewController;
 use MarkusGehrig\Dairy\Model\RecordModel;
+use MarkusGehrig\Dairy\Model\UserdataModel;
+use MarkusGehrig\Diary\Date\DateUtility;
 
 class DashboardController extends AbstractViewController
 {
@@ -38,27 +40,27 @@ class DashboardController extends AbstractViewController
     public function show()
     {
         $RecordModels = (new RecordModel())->getDataByUser($this->userId);
+        $UserModel = (new UserdataModel())->getData($this->userId);
+        $date = (new DateUtility())->setTimezone()->getToday();
 
         $items = [];
         foreach ($RecordModels as $RecordModel) {
             $array['title'] = (string) $RecordModel->getTitle();
             $array['date'] = (int) $RecordModel->getDate();
             $array['text'] = (string) $RecordModel->getText();
+            $array['id'] = (int) $RecordModel->getId();
 
             $items[] = $array;
         }
 
-        return $this->render(array('items' => $items));
+        $username = $UserModel->getSurname() . ' ' . $UserModel->getLastname();
+        return $this->render(array('items' => $items, 'username' => $username, 'date' => $date));
     }
 
     public function createAction() {
         $request = $this->getControllerRequest();
-        // var_dump();
-        //["title"]=> string(0) "" ["date"]=> string(0) "" ["text"]=> string(2271)
 
-        $RecordModel = new RecordModel((string) $request['title'], (string) $request['text'], (int) $request['date'], null, (int) $this->userId);
-        var_dump($RecordModel);
-
+        $RecordModel = new RecordModel((string) $request['title'], (string) $request['text'], (int) strtotime($request['date']), null, (int) $this->userId);
         $RecordModel->createData();
         return $this->show();
     }
@@ -68,6 +70,10 @@ class DashboardController extends AbstractViewController
     }
 
     public function removeAction() {
-
+        $request = $this->getControllerRequest();
+        
+        $RecordModel = new RecordModel();
+        $RecordModel->removeData($request['id'], $this->userId);
+        return $this->show();
     }
 }

@@ -185,23 +185,15 @@ class UserdataModel
     public function createData()
     {
         $queryBuilder = $GLOBALS['database']->createQueryBuilder();
-        $GLOBALS['database']->insert(
-            'userdata',
-            [
-                'email' =>      $this->getEmail(),
-                'password' =>   $this->getPassword(),
-                'surname' =>    $this->getSurname(),
-                'lastname' =>   $this->getLastname(),
-                'active' =>     $this->getActive()
-            ],
-            [
-                PDO::PARAM_STR,
-                PDO::PARAM_STR,
-                PDO::PARAM_STR,
-                PDO::PARAM_STR,
-                PDO::PARAM_BOOL
-            ]
-        );
+        $queryBuilder->insert('userdata')
+            ->values([
+                'email' =>      $queryBuilder->createNamedParameter($this->getEmail()),
+                'password' =>   $queryBuilder->createNamedParameter($this->getPassword()),
+                'surname' =>    $queryBuilder->createNamedParameter($this->getSurname()),
+                'lastname' =>   $queryBuilder->createNamedParameter($this->getLastname()),
+                'active' =>     $queryBuilder->createNamedParameter($this->getActive())
+            ])
+            ->execute();
         
         $this->id = $GLOBALS['database']->lastInsertId();
     }
@@ -212,26 +204,18 @@ class UserdataModel
             $this->createData();
         } else {
             $queryBuilder = $GLOBALS['database']->createQueryBuilder();
-            $GLOBALS['database']->update(
-                'userdata',
-                [
-                    'email' =>      $this->getEmail(),
-                    'password' =>   $this->getPassword(),
-                    'surname' =>    $this->getSurname(),
-                    'lastname' =>   $this->getLastname(),
-                    'active' =>     $this->getActive()
-                ],
-                [
-                    'id' => $this->getId()
-                ],
-                [
-                    PDO::PARAM_STR,
-                    PDO::PARAM_STR,
-                    PDO::PARAM_STR,
-                    PDO::PARAM_STR,
-                    PDO::PARAM_BOOL
-                ]
-            );
+            $queryBuilder->update('userdata')
+                ->values(
+                    [
+                        'email' =>      $queryBuilder->createNamedParameter($this->getEmail()),
+                        'password' =>   $queryBuilder->createNamedParameter($this->getPassword()),
+                        'surname' =>    $queryBuilder->createNamedParameter($this->getSurname()),
+                        'lastname' =>   $queryBuilder->createNamedParameter($this->getLastname()),
+                        'active' =>     $queryBuilder->createNamedParameter($this->getActive())
+                    ]
+                )
+                ->where($queryBuilder->createNamedParameter('id = ' . $this->getId()))
+                ->execute();
         }
     }
 }

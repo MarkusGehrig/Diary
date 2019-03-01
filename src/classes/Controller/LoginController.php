@@ -53,4 +53,9 @@ class LoginController extends AbstractViewController
             return $this->render(array('error' => true));
         }
     }
+
+    public function logoutAction() {
+        $GLOBALS['session']->clear();
+        return $this->render(null);
+    }
 }

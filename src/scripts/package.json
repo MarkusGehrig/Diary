@@ -11,6 +11,7 @@
     "author": "Markus Gehrig <markus.gehrig96@gmail.ocom>",
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^11.2.0",
+        "ckeditor-wordcount-plugin": "^1.17.2",
         "jquery": "^3.3.1"
     }
 }

@@ -35,4 +35,8 @@ class Session {
     public function getValue($name) {
         return $_SESSION[$name];
     }
+
+    public function clear() {
+        session_destroy();
+    }
 }

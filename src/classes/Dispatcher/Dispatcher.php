@@ -23,6 +23,7 @@ namespace MarkusGehrig\Diary\Dispatcher;
 // SOFTWARE.
 
 use MarkusGehrig\Diary\Controller\LoginController;
+use MarkusGehrig\Diary\Session\Session;
 use \Exception;
 
 class Dispatcher
@@ -47,7 +48,12 @@ class Dispatcher
         if (isset($this->controllerValue['name'])) {
             $this->controller = $this->controllerValue['name'];
         } else {
-            $this->controller = "Login";
+            if ($this->checkAuthentication()) {
+                $this->controller = "Dashboard";
+            }
+            else {
+                $this->controller = "Login";
+            }
         }
         
         return $this;

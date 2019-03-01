@@ -1,10 +1,22 @@
 <header>
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-8">
                 <img class="logo" width="64px" height="64px" src="template/images/logo.png"/>
                 MyDairy
             </div>
+            {% if username is defined %}
+                <div class="col-4">
+                    <div class="dropdown ">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            {{ username }}
+                        </button>
+                        <div class="dropdown-menu">
+                        <a class="dropdown-item" href="?Controller[name]=Login&Controller[action]=logout">Log out</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </header>

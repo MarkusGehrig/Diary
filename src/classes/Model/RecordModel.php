@@ -154,8 +154,28 @@ class RecordModel {
         return $returnData;
     }
 
+    public function removeData(int $id, int $userId) {
+        $queryBuilder = $GLOBALS['database']->createQueryBuilder();
+        $queryBuilder->delete('dairyitem')
+            ->where('id = ' . $queryBuilder->createNamedParameter($id))
+            ->andWhere('Userdata_id = ' . $queryBuilder->createNamedParameter($userId))
+            ->execute();
+    }
+
     public function createData() {
         $queryBuilder = $GLOBALS['database']->createQueryBuilder();
+        $queryBuilder->insert('dairyitem')
+            ->values(
+                [
+                    'title' =>          $queryBuilder->createNamedParameter($this->getTitle()),
+                    'text' =>           $queryBuilder->createNamedParameter($this->getText(),  PDO::PARAM_STR),
+                    'date' =>           $queryBuilder->createNamedParameter($this->getDate()),
+                    'Userdata_id' =>    $queryBuilder->createNamedParameter($this->getUserdata())
+                ]
+            )
+            ->execute();
+        
+        /*
         $GLOBALS['database']->insert(
             'dairyitem',
             [
@@ -171,6 +191,7 @@ class RecordModel {
                 PDO::PARAM_INT
             ]
         );
+        */
         
         $this->id = $GLOBALS['database']->lastInsertId();
     }
