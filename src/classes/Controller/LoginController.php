@@ -27,7 +27,7 @@ use MarkusGehrig\Diary\Auth\Authentication;
 
 class LoginController extends AbstractViewController
 {
-    private $needAuthentication = false;
+    protected $needAuthentication = false;
 
     public function __construct()
     {
