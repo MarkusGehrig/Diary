@@ -128,12 +128,12 @@ class UserdataModel
 
     public function getActive()
     {
-        return $this->active;
+        return (bool) $this->active;
     }
 
     public function setActive($active)
     {
-        $this->active = $active;
+        $this->active = (bool) $active;
         $this->updateData();
         return $this;
     }
