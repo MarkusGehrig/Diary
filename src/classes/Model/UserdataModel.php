@@ -211,7 +211,7 @@ class UserdataModel
                         'password' =>   $queryBuilder->createNamedParameter($this->getPassword()),
                         'surname' =>    $queryBuilder->createNamedParameter($this->getSurname()),
                         'lastname' =>   $queryBuilder->createNamedParameter($this->getLastname()),
-                        'active' =>     intval($queryBuilder->createNamedParameter($this->getActive(), PDO::PARAM_BOOL))
+                        'active' =>     intval($queryBuilder->createNamedParameter($this->getActive(), PDO::PARAM_BOOL, 0))
                     ]
                 )
                 ->where($queryBuilder->createNamedParameter('id = ' . $this->getId()))
