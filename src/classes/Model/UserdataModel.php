@@ -205,15 +205,11 @@ class UserdataModel
         } else {
             $queryBuilder = $GLOBALS['database']->createQueryBuilder();
             $queryBuilder->update('userdata')
-                ->values(
-                    [
-                        'email' =>      $queryBuilder->createNamedParameter($this->getEmail()),
-                        'password' =>   $queryBuilder->createNamedParameter($this->getPassword()),
-                        'surname' =>    $queryBuilder->createNamedParameter($this->getSurname()),
-                        'lastname' =>   $queryBuilder->createNamedParameter($this->getLastname()),
-                        'active' =>     $queryBuilder->createNamedParameter($this->getActive(), PDO::PARAM_INT, 0)
-                    ]
-                )
+                ->set('email', $queryBuilder->createNamedParameter($this->getEmail()))
+                ->set('password',$queryBuilder->createNamedParameter($this->getPassword()))
+                ->set('surname', $queryBuilder->createNamedParameter($this->getSurname()))
+                ->set('lastname', $queryBuilder->createNamedParameter($this->getLastname()))
+                ->set('active', $queryBuilder->createNamedParameter($this->getActive(), PDO::PARAM_INT, 0))
                 ->where('id = ' . $queryBuilder->createNamedParameter($this->getId(), PDO::PARAM_INT))
                 ->execute();
         }
