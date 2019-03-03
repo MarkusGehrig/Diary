@@ -50,7 +50,7 @@ class LoginController extends AbstractViewController
         if ($authentication->verify($username, $password)) {
             return $GLOBALS['dispatcher']->redirect("Dashboard");
         } else {
-            return $this->render(array('error' => true));
+            return $this->render(array('error' => true, 'message' => 'Login was not possible, due to a wrong username or password.'));
         }
     }
 
