@@ -209,7 +209,7 @@ class UserdataModel
                 ->set('password',$queryBuilder->createNamedParameter($this->getPassword()))
                 ->set('surname', $queryBuilder->createNamedParameter($this->getSurname()))
                 ->set('lastname', $queryBuilder->createNamedParameter($this->getLastname()))
-                ->set('active', $queryBuilder->createNamedParameter($this->getActive(), PDO::PARAM_INT, 0))
+                ->set('active', $queryBuilder->createNamedParameter($this->getActive(), PDO::PARAM_BOOL, 0))
                 ->where('id = ' . $queryBuilder->createNamedParameter($this->getId(), PDO::PARAM_INT))
                 ->execute();
         }
