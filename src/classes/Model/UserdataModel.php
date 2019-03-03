@@ -214,7 +214,7 @@ class UserdataModel
                         'active' =>     $queryBuilder->createNamedParameter($this->getActive(), PDO::PARAM_INT, 0)
                     ]
                 )
-                ->where($queryBuilder->createNamedParameter('id = ' . $this->getId()))
+                ->where('id = ' . $queryBuilder->createNamedParameter($this->getId()))
                 ->execute();
         }
     }
