@@ -217,7 +217,7 @@ class UserdataModel
                 ->where('id = ' . $queryBuilder->createNamedParameter($this->getId(), PDO::PARAM_INT));
                 /*->execute();*/
 
-            var_dump($queryBuilder-getQuery());
+            var_dump($queryBuilder->getQuery());
         }
     }
 }
