@@ -203,15 +203,26 @@ class UserdataModel
         if ($this->id == null) {
             $this->createData();
         } else {
-            $queryBuilder = $GLOBALS['database']->createQueryBuilder();
-            $queryBuilder->update('userdata')
-                ->set('email', $queryBuilder->createNamedParameter($this->getEmail()))
-                ->set('password',$queryBuilder->createNamedParameter($this->getPassword()))
-                ->set('surname', $queryBuilder->createNamedParameter($this->getSurname()))
-                ->set('lastname', $queryBuilder->createNamedParameter($this->getLastname()))
-                ->set('active', $queryBuilder->createNamedParameter($this->getActive(), PDO::PARAM_BOOL, 0))
-                ->where('id = ' . $queryBuilder->createNamedParameter($this->getId(), PDO::PARAM_INT))
-                ->execute();
+            $GLOBALS['database']->update(
+                'userdata',
+                [            
+                    'email' =>      $this->getEmail(),
+                    'password' =>   $this->getPassword(),
+                    'surname' =>    $this->getSurname(),
+                    'lastname' =>   $this->getLastname(),
+                    'active' =>     $this->getActive()
+                ],
+                [
+                    'id' => $this->getId()
+                ],
+                [
+                    PDO::PARAM_STR,
+                    PDO::PARAM_STR,
+                    PDO::PARAM_STR,
+                    PDO::PARAM_STR,
+                    PDO::PARAM_BOOL
+                ]
+            );
         }
     }
 }
